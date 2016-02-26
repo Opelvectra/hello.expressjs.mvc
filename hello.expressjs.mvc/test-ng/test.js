@@ -1,5 +1,5 @@
 /*
- * Prototype of Unit tests..
+ * Prototype of Integration tests..
  */
 
 var request = require('supertest');
