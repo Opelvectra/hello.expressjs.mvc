@@ -1,4 +1,4 @@
 var express = require('express'), 
-	app = require('./app')(express);
+	app = require('./src/app')(express);
 
 app.startServer();
