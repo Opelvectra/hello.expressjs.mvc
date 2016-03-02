@@ -84,7 +84,7 @@ function setPort(onStart){
 }
 
 function setStaicFolders(){
-	app.use('/s', express['static']('public'));
+	app.use('/s', express['static']('src/public'));
 }
 
 function setViewEngine(){
