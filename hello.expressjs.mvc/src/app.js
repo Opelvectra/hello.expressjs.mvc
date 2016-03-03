@@ -12,8 +12,8 @@ var express, app,	server, router;
 module.exports = function(expressFramework){
 	express = expressFramework;
 	return {
-		startServer: function(onStart){
-			constructor(onStart);
+		startServer: function(appConfig){
+			constructor(appConfig);
 			return server;
 		}, 
 		stopServer: function(onStop){
@@ -25,14 +25,14 @@ module.exports = function(expressFramework){
 	}
 };
 
-function constructor(onStart){
+function constructor(appConfig){
 	app = express();
 	router = express.Router();
 	app.disable('x-powered-by'); // <= removes header
 	setViewEngine();
 	setControllers();
 	setStaicFolders();
-	setPort(onStart);
+	setPort(appConfig);
 	console.log('It works!');
 }
 
@@ -73,12 +73,12 @@ function setControllers() {
 	}
 }
 
-function setPort(onStart){
-	app.set('port', process.env.PORT || 8002);
+function setPort(appConfig){
+	app.set('port', process.env.PORT || appConfig.port);
 	server = app.listen(app.get('port'), function(){
-		console.log('Express started press Ctrl-C, plz');
-		if(typeof onStart === 'function') {
-			onStart();
+		console.log('Express server listening on port ' + appConfig.port);
+		if(typeof appConfig.onStart === 'function') {
+			appConfig.onStart();
 		}
 	});
 }
