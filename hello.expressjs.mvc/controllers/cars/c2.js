@@ -1,18 +1,17 @@
+var postService = require('./../../services/posts/p1');
+
 module.exports = {
-	path: '/c2',
+	path: '/posts',
 	get: function(req, res) {
-		res.render('a', {
-			xxx: 'YyY: Car_2(get)'
-		});
+		console.log(postService.postsFactory.getAll());
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({
+            posts: postService.postsFactory.getAll()
+        }));
 	},
-	post: function(req, res) {
-		res.render('a', {
-			xxx: 'YyY: Car_2(post)'
-		});
-	},
-	'delete': function(req, res) {
-		res.render('a', {
-			xxx: 'YyY: Car_2(delete)'
-		});
-	}
+    post: function(req, res) {
+        console.log(req.body.message);
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(postService.postsFactory.post(req.body.message)));
+    }
 };

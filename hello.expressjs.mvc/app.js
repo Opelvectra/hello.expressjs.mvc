@@ -1,4 +1,5 @@
-var express, app,	server, router;
+var bodyParser = require('body-parser');
+var express, app, server, router;
 	CONTROLLERS_MODULES_PATHS = [
 	  './controllers/home',
  		'./controllers/friends', 
@@ -27,6 +28,11 @@ module.exports = function(expressFramework){
 
 function constructor(onStart){
 	app = express();
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: false }));
+
+	// parse application/json
+    app.use(bodyParser.json());
 	router = express.Router();
 	app.disable('x-powered-by'); // <= removes header
 	setViewEngine();
