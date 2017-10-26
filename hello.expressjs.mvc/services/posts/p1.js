@@ -12,7 +12,17 @@ var posts = [{
     }]
 }];
 
-module.exports = {
+var latestCommentId = 11;
+
+function getLatestCommentId(){
+    return latestCommentId;
+}
+
+function incrementLatestCommentId(){
+    latestCommentId++;
+    return getLatestCommentId();
+}
+var atata = {
     postsFactory: {
         get: function(id){
             return posts.filter(function(post) {
@@ -54,5 +64,19 @@ module.exports = {
                 return 'Post not found';
             }
         }
+    },
+    commentsFactory: {
+        post: function(postId, commentMessage){
+            console.log('>> latestId: ' + getLatestCommentId());
+            var post = atata.postsFactory.get(postId);
+            post.comments.push({
+                id: incrementLatestCommentId(),
+                message: commentMessage
+            });
+        },
+        deleteComment: function(id){
+            // TODO:
+        }
     }
 };
+module.exports = atata;
