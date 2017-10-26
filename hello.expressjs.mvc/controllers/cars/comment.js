@@ -5,8 +5,7 @@ module.exports = {
     get: function(req, res) {
         // TODO:
     },
-    deletComment: function(req, res) {
-        console.log(req.body.message);
+    delete: function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(postService.commentsFactory.deleteComment(req.params.postId, req.params.commentId)));
     }
