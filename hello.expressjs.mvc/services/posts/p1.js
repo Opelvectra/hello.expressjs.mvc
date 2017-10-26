@@ -5,10 +5,7 @@ var posts = [{
     dislikes: 50,
     comments: [{
         id: 10,
-        message: 'prove it!'
-    }, {
-        id: 11,
-        message: 'fuck off..'
+        message: 'Good for you'
     }]
 }];
 
@@ -42,13 +39,15 @@ var atata = {
                 }
             }, posts[0] || {id: -1}).id;
             console.log('>> latestId: ' + latestId);
-            posts.push({
+            var result = {
                 id: latestId + 1,
                 message: postMessage,
                 likes: 0,
                 dislikes: 0,
                 comments: []
-            });
+            };
+            posts.push(result);
+            return result;
         },
         deletePost: function(id){
             var indexOfPost = -1;
@@ -68,14 +67,28 @@ var atata = {
     commentsFactory: {
         post: function(postId, commentMessage){
             console.log('>> latestId: ' + getLatestCommentId());
-            var post = atata.postsFactory.get(postId);
-            post.comments.push({
-                id: incrementLatestCommentId(),
-                message: commentMessage
-            });
+            var post = atata.postsFactory.get(postId),
+                result = {
+                    id: incrementLatestCommentId(),
+                    message: commentMessage
+                };
+            post.comments.push(result);
+            return result;
         },
-        deleteComment: function(id){
-            // TODO:
+        deleteComment: function(postId, commentId){
+            var post = atata.postsFactory.get(postId);
+            var indexOfComment = -1;
+            post.comments.forEach(function(elem, index){
+                if(elem.id == commentId){
+                    indexOfComment = index;
+                }
+            });
+            if(indexOfComment !== -1){
+                post.comments.splice(indexOfComment, 1);
+                return 'Ok';
+            } else {
+                return 'Comment not found';
+            }
         }
     }
 };
